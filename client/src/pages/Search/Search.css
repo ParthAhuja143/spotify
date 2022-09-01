@@ -1,0 +1,277 @@
+/** @format */
+
+.search {
+	min-height: 100vh;
+	height: 100%;
+	width: 100%;
+	background-color: black;
+	color: white;
+	font-family: Helvetica;
+	display: flex;
+	align-items: flex-end;
+	justify-content: flex-end;
+	flex-direction: column;
+}
+
+.search_container {
+	display: flex;
+	align-items: center;
+	height: 100%;
+	background: linear-gradient(rgb(37, 37, 37), black);
+	width: 85%;
+	justify-content: center;
+	flex: 1;
+}
+
+.search_user {
+	z-index: 100;
+	width: 85%;
+	height: 70px;
+	display: flex;
+	position: fixed;
+	top: 0px;
+	transition: all ease 0.2s;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0px 20px;
+}
+
+@media only screen and (max-width: 1200px) {
+	.search_container,
+	.search_user {
+		width: 100%;
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.p_user_username {
+		font-size: 14px;
+		font-weight: normal;
+	}
+
+	.p_user {
+		height: 50px;
+	}
+}
+
+.searchBox {
+	display: flex;
+	border-radius: 20px;
+	width: 40%;
+	justify-content: center;
+	align-items: center;
+	height: 40px;
+	background: white;
+	padding: 0px 10px;
+}
+
+.searchBox input {
+	width: 100%;
+	height: 89%;
+	font-size: 20px;
+	color: grey;
+	outline: none;
+	border: none;
+}
+
+@media only screen and (max-width: 600px) {
+	.searchBox input {
+		font-size: 15px;
+	}
+}
+
+.search_mainBox {
+	width: 100%;
+	margin: 70px 0px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.search_rowContent {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	justify-content: center;
+}
+
+.top_result {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 300px;
+	background: rgb(29, 29, 29);
+	transition: all ease 0.2s;
+	border-radius: 10px;
+	box-shadow: rgb(19, 19, 19) 0px 2px 4px 0px, rgb(0, 0, 0) 0px 2px 16px 0px;
+	width: 100%;
+}
+
+.top_result:hover {
+	background: rgb(39, 39, 39);
+}
+
+.top_result_container {
+	margin: 40px 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+}
+
+.top_result_info {
+	width: 100%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.top_result_image {
+	height: 100px;
+	box-shadow: rgb(19, 19, 19) 0px 2px 4px 0px, rgb(0, 0, 0) 0px 2px 16px 0px;
+	width: 100px;
+	margin: 10px;
+	overflow: hidden;
+	border-radius: 50%;
+}
+
+.top_result_image img {
+	height: 100px;
+	width: 100px;
+}
+
+.top_result_name {
+	margin: 10px;
+	font-size: 40px;
+	font-weight: bolder;
+}
+
+.top_result_type {
+	font-size: 20px;
+	color: grey;
+	margin: 10px;
+}
+
+.noterm {
+	z-index: 2;
+	font-size: 50px;
+	padding: 100px;
+	color: orangered;
+	border-radius: 5px;
+	font-weight: bold;
+	bottom: 10px;
+}
+
+.playing {
+	position: absolute;
+	top: 0%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+}
+.playing:after {
+	display: block;
+	width: 100%;
+	margin-top: 10px;
+}
+.now.playing .bar {
+	display: inline-block;
+	position: relative;
+	margin-right: 1px;
+	width: 30px;
+	height: 3px;
+	overflow: hidden;
+	border-radius: 10px;
+	background: linear-gradient(to bottom, #ff9500, #ff5e3a);
+	color: transparent;
+	animation-name: pulse;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+}
+
+@media only screen and (max-width: 770px) {
+	.now.playing .bar {
+		width: 12px;
+	}
+
+	.noterm {
+		font-size: 20px;
+		padding-bottom: 0px;
+		padding-right: 0px;
+		padding-left: 0px;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	.noterm {
+		font-size: 15px;
+	}
+}
+.paused.playing .bar {
+	animation-iteration-count: 1;
+}
+
+.n1 {
+	animation-delay: 0s;
+}
+.n2 {
+	animation-delay: 0.2s;
+}
+.n3 {
+	animation-delay: 0.4s;
+}
+.n4 {
+	animation-delay: 0.9s;
+}
+.n5 {
+	animation-delay: 1.3s;
+}
+.n6 {
+	animation-delay: 0.3s;
+}
+.n7 {
+	animation-delay: 1.1s;
+}
+.n8 {
+	animation-delay: 1.9s;
+}
+@keyframes pulse {
+	0% {
+		height: 10px;
+	}
+	10% {
+		height: 70px;
+	}
+	50% {
+		height: 140px;
+	}
+	60% {
+		height: 200px;
+	}
+	80% {
+		height: 100px;
+	}
+	100% {
+		height: 50px;
+	}
+}
+
+@media only screen and (max-width: 900px) {
+	.search_rowContent {
+		flex-direction: column;
+	}
+}
+
+@media only screen and (max-width: 350px) {
+	.p_user_info {
+		visibility: hidden;
+		width: 0px;
+	}
+
+	.searchBox {
+		width: 80%;
+	}
+}

@@ -1,0 +1,57 @@
+/** @format */
+
+.c {
+	height: 200px;
+	width: 200px;
+	margin: 20px 10px;
+	cursor: pointer;
+}
+
+.c_container {
+	height: 200px;
+	overflow: hidden;
+	position: relative;
+	transition: all 0.2s ease;
+	width: 200px;
+}
+
+.c_container img {
+	height: 200px;
+	width: 200px;
+}
+
+.c_cover {
+	height: 200px;
+	transition: all 0.2s ease;
+	width: 200px;
+	left: 1000px;
+	position: absolute;
+	background-color: rgba(0, 0, 0, 0.705);
+}
+
+.c_name {
+	position: absolute;
+	top: 0;
+	left: -1000px;
+	font-size: 18px;
+	transition: all 0.4s ease;
+	font-weight: 900;
+}
+
+@media only screen and (max-width: 500px) {
+	.c,
+	.c_container,
+	.c_container img,
+	.c_cover {
+		width: 140px;
+		height: 140px;
+	}
+}
+
+.c_container:hover .c_name {
+	left: 10px;
+}
+
+.c_container:hover .c_cover {
+	left: 0;
+}
