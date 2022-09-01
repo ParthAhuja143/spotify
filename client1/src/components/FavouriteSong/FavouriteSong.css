@@ -1,0 +1,108 @@
+/** @format */
+
+.f {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	width: 100%;
+	cursor: pointer;
+	margin: 10px 20px;
+	flex-direction: row;
+	padding: 10px;
+	border-bottom: 1px solid rgb(37, 37, 37);
+	transition: 0.2s all ease;
+}
+
+.f:hover {
+	background: rgb(58, 58, 58);
+}
+
+.f_name {
+	width: 50%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+
+.f_image {
+	height: 50px;
+	width: 50px;
+	overflow: hidden;
+}
+
+.f_image img {
+	height: 50px;
+	width: 50px;
+}
+
+.f_info {
+	display: flex;
+	align-items: flex-start;
+	margin: 10px;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.f_fname {
+	font-size: 14px;
+	width: 100%;
+	font-weight: 700;
+}
+
+.f_artist {
+	font-size: 12px;
+	color: grey;
+}
+
+.f_album {
+	text-align: left;
+	font-size: 14px;
+	color: grey;
+	width: 35%;
+}
+
+.f_duration {
+	width: 15%;
+	color: grey;
+}
+
+@media only screen and (max-width: 750px) {
+	.f {
+		padding: 0;
+		margin: 10px 0;
+	}
+	.f_fname {
+		font-size: 12px;
+		padding: 0px;
+		margin: 10px 0px;
+	}
+
+	.f_artist {
+		font-size: 8px;
+	}
+
+	.f_album {
+		font-size: 10px;
+	}
+}
+
+@media only screen and (max-width: 550px) {
+	.f_image,
+	.f_image img {
+		height: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 30px;
+		border-radius: 50%;
+	}
+
+	.f_name {
+		width: 100%;
+	}
+
+	.f_album {
+		width: 0;
+		visibility: hidden;
+	}
+}
