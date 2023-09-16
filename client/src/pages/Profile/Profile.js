@@ -61,26 +61,30 @@ const Profile = () => {
 		}
 
 		const interval = setInterval(() => {
-			axios
-				.post("https://spotify-serve.herokuapp.com/refresh", {
-					refreshToken,
-				})
-				.then((res) => {
-					//console.log(res.data)
-					localStorage.setItem("accessToken", res.data.accessToken)
-					localStorage.setItem("expiresIn", res.data.expiresIn)
-				})
-				.catch((err) => {
-					console.log(err.message)
-					const sentence = ["Invalid access token","The access token expired"];
-					for(let i = 0 ; i < sentence.length ; i++){
-						if(err.message.includes(sentence[i])){
-							localStorage.removeItem("accessToken")
-							window.location.replace("/login")	
-							break;
-						}
+			const spotifyApi = new SpotifyWebApi({
+				redirectUri : 'https://spotifybyparth.netlify.app' , 
+				clientId : '39c8b3f6751d4bc2a052c0f7309949a4' , 
+				clientSecret : 'e8bcfe3ad8404709b4b932d741f97436' ,
+				refreshToken : refreshToken
+			})
+		
+			spotifyApi.refreshAccessToken()
+			.then((res) => {
+				//console.log(res.data)
+				localStorage.setItem("accessToken", res.data.accessToken)
+				localStorage.setItem("expiresIn", res.data.expiresIn)
+			})
+			.catch((err) => {
+				console.log(err.message)
+				const sentence = ["Invalid access token","The access token expired"];
+				for(let i = 0 ; i < sentence.length ; i++){
+					if(err.message.includes(sentence[i])){
+						localStorage.removeItem("accessToken")
+						window.location.replace("/login")	
+						break;
 					}
-				})
+				}
+			})
 		}, 100 * (expiresIn - 60))
 
 		return () => clearInterval(interval)

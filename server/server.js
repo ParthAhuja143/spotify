@@ -19,26 +19,6 @@ app.post('/login' , (req,res) => {
     const code = req.body.code
     //console.log(code)
 
-    const spotifyApi = new SpotifyWebApi({
-        redirectUri : 'https://spotifybyparth.netlify.app' , 
-        clientId : '39c8b3f6751d4bc2a052c0f7309949a4' , 
-        clientSecret : 'e8bcfe3ad8404709b4b932d741f97436'
-    })
-
-    spotifyApi.authorizationCodeGrant(code)
-        .then( data => {
-            //console.log(data)
-            res.json({
-                accessToken : data.body.access_token ,
-                refreshToken : data.body.refresh_token ,
-                expiresIn : data.body.expires_in
-            })
-        })
-        .catch((error) => {
-            //console.log(error , 'bbdbdfbfdbnt')
-            res.status(404).json({error : error.message})
-        })
-
 })
 
 app.post('/refresh' , (req,res) => {

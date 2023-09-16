@@ -11,6 +11,7 @@ import { faBars, faBookOpen, faDoorOpen, faHome, faLongArrowAltLeft, faPlay, faS
 import FavouriteSong from "../../components/FavouriteSong/FavouriteSong"
 import gsap from "gsap/gsap-core"
 import { Expo } from "gsap/gsap-core"
+import SpotifyWebApi from "spotify-web-api-node"
 
 const Playlist = (props) => {
 	const playlistId = props.match.params.playlistId
@@ -151,10 +152,13 @@ const Playlist = (props) => {
 		//console.log("State", state)
 
 		const interval = setInterval(() => {
-			axios
-				.post("https://spotify-serve.herokuapp.com/refresh", {
-					refreshToken,
-				})
+			const spotifyApi = new SpotifyWebApi({
+				redirectUri : 'https://spotifybyparth.netlify.app' , 
+				clientId : '39c8b3f6751d4bc2a052c0f7309949a4' , 
+				clientSecret : 'e8bcfe3ad8404709b4b932d741f97436'
+			})
+
+			spotifyApi.refreshAccessToken()
 				.then((res) => {
 					//console.log(res.data)
 					setAccessToken(res.data.accessToken)

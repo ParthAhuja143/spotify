@@ -12,6 +12,7 @@ import Song from "../../components/Song/Song.js"
 import Loading from "../../components/Loading/Loading.js"
 import gsap from "gsap/gsap-core"
 import { Expo } from "gsap/dist/gsap"
+import SpotifyWebApi from "spotify-web-api-node"
 
 const DashBoard = () => {
 	const [state, dispatch] = useStateValue()
@@ -57,30 +58,35 @@ const DashBoard = () => {
 		}
 
 		if (!localStorage.getItem("accessToken")) {
-			axios
-				.post("https://spotify-serve.herokuapp.com/login", { code })
-				.then((res) => {
-					localStorage.setItem("accessToken", res.data.accessToken)
-					localStorage.setItem("refreshToken", res.data.refreshToken)
-					localStorage.setItem("expiresIn", res.data.expiresIn)
-					window.history.pushState({}, null, "/")
-				})
-				.then(() => {
-					spotifyApi.setAccessToken(localStorage.getItem("accessToken"))
-					setFetchUser(true)
-				})
-				.catch((err) => {
-					console.log(err.message)
-					const sentence = ["Invalid access token","The access token expired"];
-					for(let i = 0 ; i < sentence.length ; i++){
-						if(err.message.includes(sentence[i])){
-							localStorage.removeItem("accessToken")
-							window.location.replace("/login")	
-							break;
-						}
+			const spotifyApi = new SpotifyWebApi({
+				redirectUri : 'https://spotifybyparth.netlify.app' , 
+				clientId : '39c8b3f6751d4bc2a052c0f7309949a4' , 
+				clientSecret : 'e8bcfe3ad8404709b4b932d741f97436'
+			})
+		
+			spotifyApi.authorizationCodeGrant(code)
+			.then((res) => {
+				localStorage.setItem("accessToken", res.data.accessToken)
+				localStorage.setItem("refreshToken", res.data.refreshToken)
+				localStorage.setItem("expiresIn", res.data.expiresIn)
+				window.history.pushState({}, null, "/")
+			})
+			.then(() => {
+				spotifyApi.setAccessToken(localStorage.getItem("accessToken"))
+				setFetchUser(true)
+			})
+			.catch((error) => {
+				//console.log(error , 'bbdbdfbfdbnt')
+				console.log(error.message)
+				const sentence = ["Invalid access token","The access token expired"];
+				for(let i = 0 ; i < sentence.length ; i++){
+					if(error.message.includes(sentence[i])){
+						localStorage.removeItem("accessToken")
+						window.location.replace("/login")	
+						break;
 					}
-					
-				})
+				}
+			})
 		} else {
 			spotifyApi.setAccessToken(localStorage.getItem("accessToken"))
 			window.history.pushState({}, null, "/")
@@ -233,33 +239,38 @@ const DashBoard = () => {
 		const refreshToken = localStorage.getItem("refreshToken")
 
 		const interval = setInterval(() => {
-			axios
-				.post("https://spotify-serve.herokuapp.com/refresh", {
-					refreshToken,
-				})
-				.then((res) => {
-					//console.log(res.data)
-					setAccessToken(res.data.accessToken)
-					setExpiresIn(res.data.expiresIn)
-					localStorage.setItem("accessToken", res.data.accessToken)
-					localStorage.setItem("expiresIn", res.data.expiresIn)
-					localStorage.setItem("refreshToken", refreshToken)
-				})
-				.then(() => {
-					spotifyApi.setAccessToken(localStorage.getItem("accessToken"))
-					setFetchUser(true)
-				})
-				.catch((err) => {
-					console.log(err.message)
-					const sentence = ["Invalid access token","The access token expired"];
-					for(let i = 0 ; i < sentence.length ; i++){
-						if(err.message.includes(sentence[i])){
-							localStorage.removeItem("accessToken")
-							window.location.replace("/login")	
-							break;
-						}
+			const spotifyApi = new SpotifyWebApi({
+				redirectUri : 'https://spotifybyparth.netlify.app' , 
+				clientId : '39c8b3f6751d4bc2a052c0f7309949a4' , 
+				clientSecret : 'e8bcfe3ad8404709b4b932d741f97436' ,
+				refreshToken : refreshToken
+			})
+		
+			spotifyApi.refreshAccessToken()
+			.then((res) => {
+				//console.log(res.data)
+				setAccessToken(res.data.accessToken)
+				setExpiresIn(res.data.expiresIn)
+				localStorage.setItem("accessToken", res.data.accessToken)
+				localStorage.setItem("expiresIn", res.data.expiresIn)
+				localStorage.setItem("refreshToken", refreshToken)
+			})
+			.then(() => {
+				spotifyApi.setAccessToken(localStorage.getItem("accessToken"))
+				setFetchUser(true)
+			})
+			.catch((err) => {
+				console.log(err.message)
+				const sentence = ["Invalid access token","The access token expired"];
+				for(let i = 0 ; i < sentence.length ; i++){
+					if(err.message.includes(sentence[i])){
+						localStorage.removeItem("accessToken")
+						window.location.replace("/login")	
+						break;
 					}
-				})
+				}
+			})
+
 		}, 100 * 1600)
 
 		return () => clearInterval(interval)

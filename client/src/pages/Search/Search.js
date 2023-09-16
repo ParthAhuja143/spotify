@@ -280,7 +280,14 @@ const Search = () => {
 			window.location = "/login"
 		}
 		const interval = setInterval(() => {
-			axios
+			const spotifyApi = new SpotifyWebApi({
+				redirectUri : 'https://spotifybyparth.netlify.app' , 
+				clientId : '39c8b3f6751d4bc2a052c0f7309949a4' , 
+				clientSecret : 'e8bcfe3ad8404709b4b932d741f97436' ,
+				refreshToken : refreshToken
+			})
+		
+			spotifyApi.refreshAccessToken()
 				.post("https://spotify-serve.herokuapp.com/refresh", {
 					refreshToken,
 				})
@@ -479,21 +486,21 @@ const Search = () => {
 												height: "300px",
 												overflow: "auto",
 											}}>
-											{searchResult !== [] && searchResult?.map((song) => <SearchSong song={song} key={song?.id} />)}
+											{searchResult != [] && searchResult?.map((song) => <SearchSong song={song} key={song?.id} />)}
 										</div>
 									</div>
 								</div>
 								<div className='p_content'>
 									<div className='p_title'>Artists</div>
-									<div className='p_contentcards'>{searchArtists !== [] && searchArtists?.map((artist) => <Artist artist={artist} key={artist?.id} />)}</div>
+									<div className='p_contentcards'>{searchArtists != [] && searchArtists?.map((artist) => <Artist artist={artist} key={artist?.id} />)}</div>
 								</div>
 								<div className='p_content'>
 									<div className='p_title'>Episodes</div>
-									<div className='p_contentcards'>{searchEpisodes !== [] && searchEpisodes?.map((episode) => <SearchEpisode episode={episode} key={episode?.id || Math.random()} />)}</div>
+									<div className='p_contentcards'>{searchEpisodes != [] && searchEpisodes?.map((episode) => <SearchEpisode episode={episode} key={episode?.id || Math.random()} />)}</div>
 								</div>
 								<div className='p_content'>
 									<div className='p_title'>Albums</div>
-									<div className='p_contentcards'>{searchAlbums !== [] && searchAlbums?.map((album) => <SearchAlbum album={album} key={album?.id} />)}</div>
+									<div className='p_contentcards'>{searchAlbums != [] && searchAlbums?.map((album) => <SearchAlbum album={album} key={album?.id} />)}</div>
 								</div>
 								<div className='p_content'>
 									<div className='p_title'>Shows</div>
@@ -505,7 +512,7 @@ const Search = () => {
 								</div>
 								<div className='p_content'>
 									<div className='p_title'>Playlists</div>
-									<div className='p_contentcards'>{searchPlaylists !== [] && searchPlaylists?.map((playlist) => <SearchPlaylists playlist={playlist} key={playlist?.id} />)}</div>
+									<div className='p_contentcards'>{searchPlaylists != [] && searchPlaylists?.map((playlist) => <SearchPlaylists playlist={playlist} key={playlist?.id} />)}</div>
 								</div>
 							</div>
 						)}
